@@ -68,7 +68,18 @@ namespace startUpProject
 
             if (strSelected == "1")
             {
-                context.Call(new ConfirmDialog(), DialogResumAfter);
+                _strMessage = "관심있는 전시장 카테고리를 말씀해주세요\n" +
+                "[의료,건강,스포츠]\n" +
+                "[오락,공연]\n" +
+                "[전기,과학,기계]\n" +
+                "[농수산,식음료,환경,관광]\n" +
+                "[전자,IT,교육]\n" +
+                "[인테리어,예술,건축]\n" +
+                "[금융,출판,기타]";
+
+                await context.PostAsync(_strMessage);
+                context.Call(new RecommendDialog(), DialogResumAfter);
+
             }
             else if (strSelected == "2")
             {
@@ -92,7 +103,7 @@ namespace startUpProject
 
                 await this.MessageReceivedAsync(context, result);
             }
-            catch(TooManyAttemptsException)
+            catch (TooManyAttemptsException)
             {
                 await context.PostAsync("Error occurred....");
             }

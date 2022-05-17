@@ -12,10 +12,10 @@ namespace startUpProject.Helpers
 
     public static class SQLHelper
     {
-        private const string strDBServer = "Server=tcp:greatwall-db-server.database.windows.net,1433;Initial Catalog=GreatWallDB;Persist Security Info=False;User ID=skkim3530;Password=inhatc1958@;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+        private const string strDBServer = "Server=tcp:greatwall-db-server.database.windows.net,1433;Initial Catalog=GreatWallDB;Persist Security Info=False;User ID=skkim3530;Password=inhatc1958@;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=60;";
 
 
-        private const string strSQL = "select * FROM [dbo].[Menus]";
+        private const string strSQL = "select * FROM [dbo].[exhibition]";
 
         public static DataSet RunSQL(string query)
         {

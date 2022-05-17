@@ -206,6 +206,7 @@
     <Compile Include="Dialogs\FAQDialog.cs" />
     <Compile Include="Dialogs\LUISDialog.cs" />
     <Compile Include="Dialogs\OrderDialog.cs" />
+    <Compile Include="Dialogs\RecommendDialog.cs" />
     <Compile Include="Dialogs\RootDialog.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
