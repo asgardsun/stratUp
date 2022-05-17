@@ -26,10 +26,42 @@ namespace startUpProject.Helpers
             };
 
             return card.ToAttachment();
-            
+         
+        }
+
+
+        public static Attachment GetHeroCardOpenUrl(string strTitle, string strSubTitle, string strImage, string strButtonText, int strButtonValue, string btnUrl)
+        {
+            List<CardImage> images = new List<CardImage>();
+            images.Add(new CardImage()
+            { Url = strImage });
+
+            List<CardAction> buttons = new List<CardAction>();
+            buttons.Add(new CardAction() 
+            { 
+                Title = strButtonText, 
+                Value = strButtonValue, 
+                Type = ActionTypes.ImBack }
+            );
+            buttons.Add(new CardAction()
+            {
+                Title = "자세히 보기",
+                Type = "openUrl",
+                Value = btnUrl,
+            });
+
+            HeroCard card = new HeroCard()
+            {
+                Title = strTitle,
+                Subtitle = strSubTitle,
+                Images = images,
+                Buttons = buttons
+            };
+
+            return card.ToAttachment();
 
         }
-           
+
 
         public static Attachment GetThumbnailCard(string strTitle, string strSubTitle, string strImage, string strButtonText, string strButtonValue)
         {

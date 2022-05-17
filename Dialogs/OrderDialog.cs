@@ -289,10 +289,11 @@ namespace startUpProject
                 foreach (DataRow row in DB_DS.Tables[0].Rows)
                 {
                     //Hero Card-01~04 attachment 
-                    message.Attachments.Add(CardHelper.GetHeroCard(row["Title"].ToString(),
+                    message.Attachments.Add(CardHelper.GetHeroCard(row["title"].ToString(),
                                             row["Price"].ToString(),
-                                            this.strServerURL + row["Images"].ToString(),
-                                            row["Title"].ToString(), row["MenuID"].ToString()));
+                                            this.strServerURL + row["images"].ToString(),
+                                            row["Title"].ToString(), 
+                                            row["MenuID"].ToString()));
                 }
 
                 message.Attachments.Add(CardHelper.GetHeroCard("Exit food order...", "Exit",

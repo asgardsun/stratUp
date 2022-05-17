@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -7,6 +8,7 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Luis;
 using Microsoft.Bot.Builder.Luis.Models;
 using Microsoft.Bot.Connector;
+using startUpProject.Helpers;
 
 namespace startUpProject.Dialogs
 {
@@ -18,6 +20,10 @@ namespace startUpProject.Dialogs
     public class RecommendDialog : LuisDialog<string>
     {
         string strMessage;
+        string recommend;
+        string strServerURL = "http://exhibition-bot.azurewebsites.net/Images/";
+
+        //string strClientURL = "http://localhost:3978/Images/";
 
         [LuisIntent("")]
         [LuisIntent("None")]
@@ -36,21 +42,55 @@ namespace startUpProject.Dialogs
 
             EntityRecommendation MedicalEntityRecommendation;
 
-            String medical = "의료";
+            String Exhibition = "";
 
-            if (result.TryFindEntity("Medical", out MedicalEntityRecommendation))
+            if (result.TryFindEntity("Exhibition", out MedicalEntityRecommendation))
             {
-                medical = MedicalEntityRecommendation.Entity.Replace(" ", " ");
+                Exhibition = MedicalEntityRecommendation.Entity.Replace(" ", "");
+                recommend = Exhibition;
             }
             else
             {
-
-                await context.PostAsync(" 없는 카테고리를 선택하셨습니다.");
+                await context.PostAsync("없는 카테고리를 선택하셨습니다.");
                 context.Wait(this.MessageReceived);
                 return;
             }
-            await context.PostAsync($"{medical}를 선택하셨습니다.");
+            await context.PostAsync($"{Exhibition}를 선택하셨습니다.");
+
+            #region
+            strMessage = $"{recommend}에 대한 전시장 입니다. ";
+            await context.PostAsync(strMessage);
+
+            //연결
+            string strSQL = $"select * FROM [dbo].[exhibition] where class = N'{recommend}' and startdate > getdate()";
+            DataSet DB_DS = SQLHelper.RunSQL(strSQL);
+            //DB 연결
+
+            //Menu
+            message = context.MakeMessage();
+            foreach (DataRow row in DB_DS.Tables[0].Rows)
+            {
+                //Hero Card-01~04 attachment 
+                message.Attachments.Add(CardHelper.GetHeroCardOpenUrl(row["title"].ToString(),
+                                        row["title"].ToString(),
+                                        this.strServerURL + row["image"].ToString(),
+                                        row["Title"].ToString(),Int16.Parse(row["Number"].ToString()), row["homepage"].ToString()));
+            }
+
+            message.Attachments.Add(CardHelper.GetHeroCard("Exit food order...", "Exit",
+                                    null, "Exit Order", "Exit"));
+
+
+            message.AttachmentLayout = "carousel";
+
+            await context.PostAsync(message);
+
+            #endregion
+
+
             context.Wait(this.MessageReceived);
+
+            
         }
     }
 }

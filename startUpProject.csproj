@@ -192,6 +192,7 @@
   <ItemGroup>
     <Content Include="default.htm" />
     <Content Include="Global.asax" />
+    <Content Include="Images\cocex.jpg" />
     <Content Include="Images\menu_01.jpg" />
     <Content Include="Images\menu_03.jpg" />
     <Content Include="Images\menu_02.jpg" />
@@ -221,6 +222,7 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="libman.json" />
+    <None Include="Properties\PublishProfiles\exhibition-bot - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -229,7 +231,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="QRCode\" />
   </ItemGroup>
   <PropertyGroup>
