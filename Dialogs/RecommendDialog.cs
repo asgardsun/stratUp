@@ -21,9 +21,8 @@ namespace startUpProject.Dialogs
     {
         string strMessage;
         string recommend;
-        string strServerURL = "http://exhibition-bot.azurewebsites.net/Images/";
-
-        //string strClientURL = "http://localhost:3978/Images/";
+        string url = "http://"+ HttpContext.Current.Request.Url.Host+":"+HttpContext.Current.Request.Url.Port.ToString()+ "/Images/";
+        
 
         [LuisIntent("")]
         [LuisIntent("None")]
@@ -73,8 +72,8 @@ namespace startUpProject.Dialogs
                 //Hero Card-01~04 attachment 
                 message.Attachments.Add(CardHelper.GetHeroCardOpenUrl(row["title"].ToString(),
                                         row["title"].ToString(),
-                                        this.strServerURL + row["image"].ToString(),
-                                        row["Title"].ToString(),Int16.Parse(row["Number"].ToString()), row["homepage"].ToString()));
+                                        this.url + row["image"].ToString(),
+                                        row["Title"].ToString(), row["Number"].ToString(), row["homepage"].ToString()));
             }
 
             message.Attachments.Add(CardHelper.GetHeroCard("Exit food order...", "Exit",
@@ -88,9 +87,25 @@ namespace startUpProject.Dialogs
             #endregion
 
 
-            context.Wait(this.MessageReceived);
+            context.Call(new Checkinformation(), DialogResumeAfter);
 
-            
+        }
+
+
+        private async Task DialogResumeAfter(IDialogContext context, IAwaitable<string> result)
+        {
+            try
+            {
+                strMessage = await result;
+
+                //await context.PostAsync(strWelcomeMessage);
+
+
+            }
+            catch (TooManyAttemptsException)
+            {
+                await context.PostAsync("Error occured....");
+            }
         }
     }
 }

@@ -21,7 +21,7 @@ namespace SimpleEchoBot
                 Formatting = Newtonsoft.Json.Formatting.Indented,
                 NullValueHandling = NullValueHandling.Ignore,
             };
-
+    
             // Web API configuration and services
 
             // Web API routes

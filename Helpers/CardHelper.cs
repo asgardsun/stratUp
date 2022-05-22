@@ -30,7 +30,7 @@ namespace startUpProject.Helpers
         }
 
 
-        public static Attachment GetHeroCardOpenUrl(string strTitle, string strSubTitle, string strImage, string strButtonText, int strButtonValue, string btnUrl)
+        public static Attachment GetHeroCardOpenUrl(string strTitle, string strSubTitle, string strImage, string strButtonText, string strButtonValue, string btnUrl)
         {
             List<CardImage> images = new List<CardImage>();
             images.Add(new CardImage()
