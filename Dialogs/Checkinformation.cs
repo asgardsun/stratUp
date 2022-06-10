@@ -7,6 +7,9 @@ using System.Web;
 using Microsoft.Bot.Connector;
 using startUpProject;
 using System.Diagnostics;
+using startUpProject.Helpers;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace startUpProject.Dialogs
 {
@@ -32,35 +35,41 @@ namespace startUpProject.Dialogs
 
         private async Task MessageReceivedAsync(IDialogContext context, IAwaitable<object> result)
         {
+            Activity activity = await result as Activity;
             string Question = "";
             if (result != null)
             {
                 count += 1;
-                Activity activity = await result as Activity;
-                Debug.WriteLine(activity.Text);
                 if (activity.Text.Trim().ToLower() == "exit")
                 {
-                    //SqlParameter[] para =
-                    //{
-                    //new SqlParameter("@UserName",SqlDbType.NVarChar),
-                    //new SqlParameter("@UserAge",SqlDbType.NVarChar),
-                    //new SqlParameter("@UserGender",SqlDbType.NVarChar),
-                    //new SqlParameter("@UserNumber",SqlDbType.NVarChar),
-                    //new SqlParameter("@UserEmail",SqlDbType.NVarChar),
-                    //new SqlParameter("@UserRegion",SqlDbType.NVarChar),
-                    //new SqlParameter("@UserExhibiton",SqlDbType.NVarChar),
-                    //};
-                    //para[0].Value = userinfo[1];
-                    //para[1].Value = userinfo[4];
-                    //para[2].Value = userinfo[2];
-                    //para[3].Value = userinfo[1];
-                    //para[4].Value = userinfo[3];
-                    //para[5].Value = userinfo[5];
-                    //para[6].Value = userinfo[0];
+                    foreach (String i in userinfo)
+                    {
+                        Debug.WriteLine(i);
+                        Debug.WriteLine(i.GetType());
+                    }
+                    SqlParameter[] para =
+                    {
+                    new SqlParameter("@UserName",SqlDbType.NVarChar),
+                    new SqlParameter("@UserAge",SqlDbType.NVarChar),
+                    new SqlParameter("@UserGender",SqlDbType.NVarChar),
+                    new SqlParameter("@UserNumber",SqlDbType.NVarChar),
+                    new SqlParameter("@UserEmail",SqlDbType.NVarChar),
+                    new SqlParameter("@UserRegion",SqlDbType.NVarChar),
+                    new SqlParameter("@UserExhibiton",SqlDbType.NVarChar),
+                    };
+                    para[0].Value = userinfo[1];
+                    para[1].Value = userinfo[5];
+                    para[2].Value = userinfo[3];
+                    para[3].Value = userinfo[2];
+                    para[4].Value = userinfo[4];
+                    para[5].Value = userinfo[6];
+                    para[6].Value = userinfo[0];
 
-                    //SQLHelper.ExecuteNonQuery(
-                    //            "INSERT INTO Users(UserName, UserAge, UserGender, UserNumber,UserEmail,UserRegion,UserExhibiton) " +
-                    //            "VALUES(@UserName, @UserAge, @UserGender, @UserNumber, @UserEmail, @UserRegion,@UserExhibiton)", para);
+                    SQLHelper.ExecuteNonQuery(
+                                "INSERT INTO Users(UserName, UserAge, UserGender, UserNumber,UserEmail,UserRegion,UserExhibiton) " +
+                                "VALUES(@UserName, @UserAge, @UserGender, @UserNumber, @UserEmail, @UserRegion,@UserExhibiton)", para);
+
+
                     ////context.Call(new OrderDialog(), DialogResumeAfter);
                     count = 0;
                     userinfo.Clear();
@@ -71,8 +80,8 @@ namespace startUpProject.Dialogs
                 {         
 
                     if (count == 1) Question = "이름을 입력해 주세요";
-                    else if (count == 2) Question = "전화번호를 입력해주세요.(-없이 번호만 입력).";
-                    else if (count == 3) Question = "성별을 입력해주세요(-없이 번호만 입력).";
+                    else if (count == 2) Question = "전화번호를 입력해주세요.( - 없이 번호만 입력).";
+                    else if (count == 3) Question = "성별을 입력해주세요(남성, 여성).";
                     else if (count == 4) Question = "이메일을 입력해주세요.";
                     else if (count == 5) Question = "연령대를 입력해주세요.(20대미만,20대,30대,40대,50대,60대이상)";
                     else if (count == 6) Question =  "지역을 입력해주세요.(서울,인천,수원,대전,광주,대구,부산,강원도,경기도,경상도,전라도,충청도)";
@@ -88,12 +97,11 @@ namespace startUpProject.Dialogs
                 {
                     userinfo.Add(strMessage);
                 }
+                else
+                {
+                    userinfo.Add(activity.Text);
+                }
             }
-
-
-
-
-
         }
 
         private Task DialogResumAfter(IDialogContext context, IAwaitable<object> result)

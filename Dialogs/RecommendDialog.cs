@@ -21,8 +21,8 @@ namespace startUpProject.Dialogs
     {
         string strMessage;
         string recommend;
-        string url = "http://"+ HttpContext.Current.Request.Url.Host+":"+HttpContext.Current.Request.Url.Port.ToString()+ "/Images/";
-        
+        string url = "http://" + HttpContext.Current.Request.Url.Host + ":" + HttpContext.Current.Request.Url.Port.ToString() + "/Images/";
+
 
         [LuisIntent("")]
         [LuisIntent("None")]
@@ -69,9 +69,16 @@ namespace startUpProject.Dialogs
             message = context.MakeMessage();
             foreach (DataRow row in DB_DS.Tables[0].Rows)
             {
+                String start = row["startdate"].ToString();
+                String end = row["enddate"].ToString();
+                String expense = row["expense"].ToString();
+
+                //row["expense"].ToString()
+                string subtitle = $"시작일 : {start}, 종료일 :{end} ,\n" +
+                    $"가격:{expense} \n";
                 //Hero Card-01~04 attachment 
                 message.Attachments.Add(CardHelper.GetHeroCardOpenUrl(row["title"].ToString(),
-                                        row["title"].ToString(),
+                                        subtitle,
                                         this.url + row["image"].ToString(),
                                         row["Title"].ToString(), row["Number"].ToString(), row["homepage"].ToString()));
             }

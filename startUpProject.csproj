@@ -193,6 +193,7 @@
     <Content Include="default.htm" />
     <Content Include="Global.asax" />
     <Content Include="Images\cocex.jpg" />
+    <Content Include="Images\kintex.jpg" />
     <Content Include="Images\menu_01.jpg" />
     <Content Include="Images\menu_03.jpg" />
     <Content Include="Images\menu_02.jpg" />
@@ -203,11 +204,11 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Dialogs\Checkinformation.cs" />
-    <Compile Include="Dialogs\ReadDialog.cs" />
     <Compile Include="Dialogs\ConfirmDialog.cs" />
     <Compile Include="Dialogs\FAQDialog.cs" />
     <Compile Include="Dialogs\LUISDialog.cs" />
     <Compile Include="Dialogs\OrderDialog.cs" />
+    <Compile Include="Dialogs\ReadDialog.cs" />
     <Compile Include="Dialogs\RecommendDialog.cs" />
     <Compile Include="Dialogs\RootDialog.cs" />
     <Compile Include="Global.asax.cs">
