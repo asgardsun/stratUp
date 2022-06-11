@@ -56,14 +56,24 @@ namespace startUpProject.Dialogs
             }
             await context.PostAsync($"{Exhibition}를 선택하셨습니다.");
 
+
+            string strSQL = $"select * FROM [dbo].[exhibition] where class = N'{recommend}' and startdate > getdate()";
+            DataSet DB_DS = SQLHelper.RunSQL(strSQL);
+            //DB 연결
+            if (DB_DS.Tables[0].Rows.Count == 0)
+            {
+                strMessage = $"{recommend} 전시장이 없습니다. 초기 화면으로 다시 돌아갑니다.";
+                await context.PostAsync(strMessage);
+                context.Done(strMessage);
+                return;
+            }
+
             #region
             strMessage = $"{recommend}에 대한 전시장 입니다. ";
             await context.PostAsync(strMessage);
 
             //연결
-            string strSQL = $"select * FROM [dbo].[exhibition] where class = N'{recommend}' and startdate > getdate()";
-            DataSet DB_DS = SQLHelper.RunSQL(strSQL);
-            //DB 연결
+
 
             //Menu
             message = context.MakeMessage();
@@ -83,8 +93,6 @@ namespace startUpProject.Dialogs
                                         row["Title"].ToString(), row["Number"].ToString(), row["homepage"].ToString()));
             }
 
-            message.Attachments.Add(CardHelper.GetHeroCard("Exit food order...", "Exit",
-                                    null, "Exit Order", "Exit"));
 
 
             message.AttachmentLayout = "carousel";
