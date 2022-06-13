@@ -88,7 +88,7 @@ namespace startUpProject
 
             else
             {
-                _strMessage = "You have made a mistake. Please select again...";
+                _strMessage = "잘못 선택하셨습니다. 올바른 선택을 해주세요";
                 await context.PostAsync(_strMessage);
                 context.Wait(SendWelcomeMessageAsync);
             }
@@ -105,7 +105,7 @@ namespace startUpProject
             }
             catch (TooManyAttemptsException)
             {
-                await context.PostAsync("Error occurred....");
+                await context.PostAsync("에러가 발생했습니다.");
             }
         }
 

@@ -43,7 +43,7 @@ namespace startUpProject.Dialogs
             String strAnswer = activity.Text.Trim();
             if (result != null)
             {
-                if (activity.Text.Trim().ToLower() == "exit")
+                if (activity.Text.Trim() == "종료")
                 {
                     foreach (String i in userinfo)
                     {
@@ -88,7 +88,7 @@ namespace startUpProject.Dialogs
                     }
                     else if (count == 2)
                     {
-                        Question = "전화번호를 입력해주세요.( - 없이 번호만 입력).";
+                        Question = "전화번호를 입력해주세요.( - 포함 번호만 입력).";
                         regex = new Regex(@"^[가-힣]{3}$");
                     }
                     else if (count == 3)
@@ -106,11 +106,11 @@ namespace startUpProject.Dialogs
                         regex = new Regex(@"[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?");
                     }
                     else if (count == 6) Question = "지역을 입력해주세요.(서울,인천,수원,대전,광주,대구,부산,강원도,경기도,경상도,전라도,충청도)";
-                    else if (count > 6) Question = "모든 입력이 끝났습니다. Exit입력 해주세요";
+                    else if (count > 6) Question = "모든 입력이 끝났습니다. 종료 입력 해주세요";
 
 
                 }
-                
+
 
                 String strMessage = string.Format(activity.Text);
                 if (init == 0)
@@ -123,7 +123,7 @@ namespace startUpProject.Dialogs
                 }
                 else
                 {
-                    if ((count == 1 | count ==2 | count ==3 | count == 5) &&!regex.IsMatch(strMessage))
+                    if ((count == 1 | count == 2 | count == 3 | count == 5) && !regex.IsMatch(strMessage))
                     {
                         await context.PostAsync("입력이 잘못되었습니다.");
                         return;
@@ -141,7 +141,7 @@ namespace startUpProject.Dialogs
                     }
                     Debug.WriteLine(userinfo.ToString());
                 }
-                
+
             }
         }
 
