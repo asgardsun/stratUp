@@ -13,7 +13,7 @@ using startUpProject.Helpers;
 namespace startUpProject.Dialogs
 {
     //  "AppId, subscription, domain"
-    [LuisModel("b987b592-2376-4075-898b-3f488a7a151e", "a8c0675b551546a5a561dcad52e76843", domain: "australiaeast.api.cognitive.microsoft.com")]
+    [LuisModel("d3633b0a-0286-4d34-b1da-1a906f3a6b48", "a8c0675b551546a5a561dcad52e76843", domain: "australiaeast.api.cognitive.microsoft.com")]
 
 
     [Serializable]
@@ -34,7 +34,7 @@ namespace startUpProject.Dialogs
         }
 
         //Exhibition_Recommend
-        [LuisIntent("Exhibition_Recommend")]
+        [LuisIntent("Exhibition_Re")]
         public async Task Exhibition_Recommend(IDialogContext context, IAwaitable<IMessageActivity> activity, LuisResult result)
         {
             var message = await activity;
@@ -43,7 +43,7 @@ namespace startUpProject.Dialogs
 
             String Exhibition = "";
 
-            if (result.TryFindEntity("Exhibition", out MedicalEntityRecommendation))
+            if (result.TryFindEntity("Topic", out MedicalEntityRecommendation))
             {
                 Exhibition = MedicalEntityRecommendation.Entity.Replace(" ", "");
                 recommend = Exhibition;

@@ -70,7 +70,7 @@ namespace startUpProject.Dialogs
                                                     row["Title"].ToString(), row["title"].ToString(), row["homepage"].ToString()));
                         }
 
-                        message.Attachments.Add(CardHelper.GetHeroCard("등록된 회원정보가 존재하지 않습니다.", "등록 회원정보를 정확히 확인해주세요",
+                        message.Attachments.Add(CardHelper.GetHeroCard("초기화면으로 돌아가기 위해서는 종료 버튼을 클릭해 주세요.", "클릭하기",
                                                 null, "종료", "종료"));
                         message.AttachmentLayout = "carousel";
                         await context.PostAsync(message);
